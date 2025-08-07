@@ -11,7 +11,7 @@
       "Resource": "arn:aws:s3:::greenalytics-frontend-umar/*",
       "Condition": {
         "StringEquals": {
-          "AWS:SourceArn": "arn:aws:cloudfront::931633655568:distribution/E12345ABCDE"
+          "AWS:SourceArn": "arn:aws:cloudfront::931633655568:distribution/E3OW5T49BY0HPW"
         }
       }
     }

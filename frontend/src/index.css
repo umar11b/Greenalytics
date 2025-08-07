@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -5,9 +9,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f9fafb;
 }
 
 #root {
   min-height: 100vh;
   width: 100%;
+  background-color: #f9fafb;
+}
+
+/* Ensure smooth transitions for dark mode */
+* {
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* Debug styles to ensure visibility */
+.debug {
+  border: 2px solid red;
+  background-color: yellow;
 }

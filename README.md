@@ -1,6 +1,6 @@
 # Greenalytics – Cloud-Native Environmental Dashboard
 
-Greenalytics is a real-time, cloud-native environmental dashboard that visualizes and tracks sustainability metrics such as carbon emissions, waste output, and energy consumption. Built to support eco-conscious initiatives, this project is designed with AWS cloud services, GitHub Actions CI/CD, and modern frontend/backend frameworks.
+Greenalytics is a real-time, cloud-native environmental dashboard that visualizes and tracks sustainability metrics such as carbon emissions, waste output, and energy consumption. Built to support eco-conscious initiatives, this project is designed with AWS cloud services, GitHub Actions CI/CD, Infrastructure as Code, and modern frontend/backend frameworks.
 
 ---
 
@@ -10,7 +10,7 @@ The goal of Greenalytics is to:
 
 - Educate users and organizations about their environmental impact
 - Provide actionable insights into emissions, energy usage, and sustainability trends
-- Demonstrate DevOps practices, infrastructure as code, and cloud-native deployment
+- Demonstrate DevOps practices, Infrastructure as Code, and AI integration for cloud-native deployment
 
 ---
 
@@ -18,11 +18,11 @@ The goal of Greenalytics is to:
 
 ### Cloud & Infrastructure
 
-- **AWS S3** - Static site hosting
-- **AWS CloudFront** - CDN with HTTPS via ACM
-- **AWS IAM** - Permissions and access control
-- **GitHub Actions** - CI/CD automation for frontend deployment
-- _(Terraform/CDK planned for future phases)_
+- **AWS S3** – Static site hosting
+- **AWS CloudFront** – CDN with HTTPS via ACM
+- **AWS IAM** – Permissions and access control
+- **GitHub Actions** – CI/CD automation for frontend deployment
+- **Terraform / AWS CDK** – Infrastructure as Code
 
 ### Frontend
 
@@ -38,9 +38,16 @@ The goal of Greenalytics is to:
 
 ### DevOps Practices
 
-- GitHub Actions workflows for CI/CD
-- Linting, build, and deploy pipelines
-- Version-controlled infrastructure (in progress)
+- CI/CD pipelines with GitHub Actions
+- Linting, build, and deploy automation
+- Version-controlled infrastructure with Terraform/CDK
+- SSL/TLS setup via AWS ACM
+
+### AI Integration _(Planned)_
+
+- **AI-powered environmental insights generator**
+  - Pipeline: data ingestion → AI model (AWS SageMaker / OpenAI API) → dashboard summaries & recommendations
+  - Demonstrates deploying and integrating AI workloads into cloud infrastructure
 
 ---
 
@@ -50,7 +57,8 @@ The goal of Greenalytics is to:
 | ------- | -------------------------------- | -------------- |
 | Phase 1 | Frontend setup + static hosting  | ✅ Complete    |
 | Phase 2 | Real-time data integration + API | ⏳ In Progress |
-| Phase 3 | Full Terraform automation        | ⏳ Planned     |
+| Phase 3 | Terraform IaC automation         | ⏳ Planned     |
+| Phase 4 | AI-powered insights integration  | ⏳ Planned     |
 
 ---
 
@@ -59,6 +67,7 @@ The goal of Greenalytics is to:
 - Carbon Emissions by category (travel, food, home)
 - Weekly/Monthly waste output trends
 - Energy usage heatmaps
+- AI-generated optimization suggestions
 
 ---
 
@@ -66,18 +75,20 @@ The goal of Greenalytics is to:
 
 - Strengthen AWS experience (S3, IAM, CloudFront, Lambda)
 - Improve DevOps proficiency (CI/CD, GitOps, logging)
-- Practice Infrastructure as Code (Terraform/CDK)
-- Improve cloud-native design + documentation habits
+- Apply Infrastructure as Code (Terraform/CDK)
+- Integrate AI into cloud-native workloads
+- Build scalable, production-ready dashboards
 
 ---
 
 ## 🏢 Future Roadmap
 
 - [ ] Integrate real APIs (NASA, AirNow)
-- [ ] Add backend API with DB persistence
-- [ ] Enable user profiles + metric uploads
-- [ ] Terraform IaC automation
+- [ ] Backend API + DB persistence
+- [ ] User profiles + metric uploads
+- [ ] Full Terraform IaC automation
 - [ ] Monitoring with CloudWatch/Grafana
+- [ ] AI-powered recommendations
 - [ ] Cost optimization best practices
 
 ---
@@ -88,13 +99,13 @@ The goal of Greenalytics is to:
    ```bash
    git clone https://github.com/<your-username>/greenalytics.git
    ```
-2. Install deps & run locally:
+2. Install dependencies & run locally:
    ```bash
    cd frontend
    npm install
    npm run dev
    ```
-3. Deploy manually to S3:
+3. Build & deploy to S3:
    ```bash
    npm run build
    aws s3 sync dist/ s3://your-bucket-name
@@ -104,7 +115,7 @@ The goal of Greenalytics is to:
 
 ## 🚀 CI/CD via GitHub Actions
 
-On every push to `main`, the site is built and deployed to the specified S3 bucket.
+On every push to `main`, the site is built and deployed automatically to S3.
 
 ---
 
@@ -116,4 +127,4 @@ For DevOps/Cloud consulting: [Tekict.com](https://tekict.com)
 
 ---
 
-> “Green tech isn’t just a buzzword. It’s a responsibility. This project reflects my commitment to sustainability and modern cloud engineering.”
+> “Green tech isn’t just a buzzword. It’s a responsibility. This project reflects my commitment to sustainability, modern cloud engineering, and AI integration.”

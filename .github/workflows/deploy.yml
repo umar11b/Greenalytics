@@ -31,9 +31,10 @@ jobs:
         run: npm run build
 
       - name: ☁️ Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::931633655568:role/GitHubPortfolioDeploy
+          role-session-name: GreenlyticsDeployment
           aws-region: us-east-1
 
       - name: 🚀 Sync to S3

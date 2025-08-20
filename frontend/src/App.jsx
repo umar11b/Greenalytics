@@ -1,12 +1,12 @@
-import React from "react";
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getMetrics } from "./services/metricsService";
+import "./App.css";
 
 function App() {
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [colorMode, setColorMode] = useState("light");
+  const [colorMode, setColorMode] = useState("dark");
 
   const fetchMetrics = useCallback(async () => {
     try {
@@ -18,7 +18,6 @@ function App() {
     } catch (err) {
       setError(err.message);
       console.error("Error loading metrics:", err);
-      alert(`Error loading metrics: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -31,46 +30,19 @@ function App() {
 
   const handleRefresh = () => {
     fetchMetrics();
-    alert("Refreshing data...");
   };
 
   const toggleColorMode = () => {
     setColorMode(colorMode === "light" ? "dark" : "light");
   };
 
-  const containerStyle = {
-    minHeight: "100vh",
-    backgroundColor: colorMode === "light" ? "#f9fafb" : "#1a202c",
-    color: colorMode === "light" ? "#2d3748" : "white",
-    padding: "24px",
-    fontFamily: "system-ui, -apple-system, sans-serif",
-  };
-
-  const cardStyle = {
-    backgroundColor: colorMode === "light" ? "white" : "#2d3748",
-    border: `1px solid ${colorMode === "light" ? "#e2e8f0" : "#4a5568"}`,
-    borderRadius: "8px",
-    padding: "24px",
-    marginBottom: "16px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-    transition: "all 0.2s",
-  };
-
-  const buttonStyle = {
-    backgroundColor: "#22c55e",
-    color: "white",
-    border: "none",
-    padding: "8px 16px",
-    borderRadius: "4px",
-    cursor: "pointer",
-    marginRight: "8px",
-  };
-
   if (loading) {
     return (
-      <div style={containerStyle}>
-        <div style={{ textAlign: "center", paddingTop: "100px" }}>
-          <h2 style={{ color: "#718096" }}>Loading environmental metrics...</h2>
+      <div className={`app ${colorMode}`}>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <h2>Loading environmental metrics...</h2>
+          <p>Analyzing sustainability data</p>
         </div>
       </div>
     );
@@ -78,12 +50,12 @@ function App() {
 
   if (error) {
     return (
-      <div style={containerStyle}>
-        <div style={{ textAlign: "center", paddingTop: "100px" }}>
-          <h2 style={{ color: "#e53e3e", marginBottom: "16px" }}>
-            Failed to load metrics: {error}
-          </h2>
-          <button style={buttonStyle} onClick={fetchMetrics}>
+      <div className={`app ${colorMode}`}>
+        <div className="error-container">
+          <div className="error-icon">⚠️</div>
+          <h2>Failed to load metrics</h2>
+          <p>{error}</p>
+          <button className="btn-primary" onClick={fetchMetrics}>
             Try Again
           </button>
         </div>
@@ -92,59 +64,90 @@ function App() {
   }
 
   return (
-    <div style={containerStyle}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "32px",
-        }}
-      >
-        <div>
-          <h1
-            style={{ color: "#22c55e", marginBottom: "8px", fontSize: "24px" }}
-          >
-            🌿 Greenalytics Dashboard
-          </h1>
-          <p style={{ color: "#718096" }}>
-            Real-time environmental impact monitoring
-          </p>
-        </div>
-        <div>
-          <button style={buttonStyle} onClick={handleRefresh}>
-            🔄 Refresh
-          </button>
-          <button style={buttonStyle} onClick={toggleColorMode}>
-            {colorMode === "light" ? "🌙" : "☀️"} Toggle Theme
-          </button>
-        </div>
-      </div>
+    <div className={`app ${colorMode}`}>
+      {/* Header */}
+      <header className="header">
+        <div className="header-content">
+          <div className="brand">
+            <div className="logo">
+              <span className="logo-icon">🌿</span>
+            </div>
+            <div className="brand-text">
+              <h1>Greenalytics</h1>
+              <p>Environmental Intelligence Dashboard</p>
+            </div>
+          </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "24px",
-        }}
-      >
-        {metrics &&
-          Object.entries(metrics).map(([key, metric]) => (
-            <MetricCard
-              key={key}
-              metricKey={key}
-              metric={metric}
-              colorMode={colorMode}
-              cardStyle={cardStyle}
-            />
-          ))}
-      </div>
+          <div className="header-actions">
+            <button className="btn-secondary" onClick={handleRefresh}>
+              <span className="btn-icon">↻</span>
+              Refresh
+            </button>
+
+            <div className="theme-toggle">
+              <input
+                type="checkbox"
+                id="theme-switch"
+                checked={colorMode === "dark"}
+                onChange={toggleColorMode}
+                className="theme-switch-input"
+              />
+              <label htmlFor="theme-switch" className="theme-switch-label">
+                <span className="theme-switch-icon">☀️</span>
+                <span className="theme-switch-icon">🌙</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="main-content">
+        {/* Stats Overview */}
+        <section className="stats-overview">
+          <div className="stats-grid">
+            {metrics &&
+              Object.entries(metrics).map(([key, metric]) => (
+                <MetricCard
+                  key={key}
+                  metricKey={key}
+                  metric={metric}
+                  colorMode={colorMode}
+                />
+              ))}
+          </div>
+        </section>
+
+        {/* Additional Dashboard Sections */}
+        <section className="dashboard-sections">
+          <div className="section-grid">
+            <div className="chart-card">
+              <h3>Carbon Emissions Trend</h3>
+              <div className="chart-placeholder">
+                <div className="chart-line"></div>
+                <div className="chart-line"></div>
+                <div className="chart-line"></div>
+              </div>
+            </div>
+
+            <div className="chart-card">
+              <h3>Energy Consumption</h3>
+              <div className="chart-placeholder">
+                <div className="chart-bar"></div>
+                <div className="chart-bar"></div>
+                <div className="chart-bar"></div>
+                <div className="chart-bar"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
 
-// Metric Card Component
-const MetricCard = ({ metricKey, metric, colorMode, cardStyle }) => {
+// Enhanced Metric Card Component
+const MetricCard = ({ metricKey, metric, colorMode }) => {
   const getMetricIcon = (key) => {
     const icons = {
       carbonFootprint: "🌿",
@@ -161,12 +164,12 @@ const MetricCard = ({ metricKey, metric, colorMode, cardStyle }) => {
     switch (trend) {
       case "increasing":
       case "improving":
-        return "#22c55e";
+        return "var(--success-color)";
       case "decreasing":
-        return "#ef4444";
+        return "var(--danger-color)";
       case "stable":
       default:
-        return "#6b7280";
+        return "var(--neutral-color)";
     }
   };
 
@@ -183,70 +186,41 @@ const MetricCard = ({ metricKey, metric, colorMode, cardStyle }) => {
     }
   };
 
+  const getMetricTitle = (key) => {
+    const titles = {
+      carbonFootprint: "Carbon Footprint",
+      energyConsumption: "Energy Consumption",
+      waterUsage: "Water Usage",
+      wasteProduction: "Waste Production",
+      renewableEnergy: "Renewable Energy",
+      airQuality: "Air Quality Index",
+    };
+    return titles[key] || key.replace(/([A-Z])/g, " $1").trim();
+  };
+
   return (
-    <div style={cardStyle}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div className="metric-card">
+      <div className="metric-header">
+        <div className="metric-icon">{getMetricIcon(metricKey)}</div>
+        <div className="metric-title">{getMetricTitle(metricKey)}</div>
+      </div>
+
+      <div className="metric-value">
+        <span className="value-number">{metric.value.toLocaleString()}</span>
+        <span className="value-unit">{metric.unit}</span>
+      </div>
+
+      <div className="metric-trend">
         <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
+          className="trend-indicator"
+          style={{ backgroundColor: getTrendColor(metric.trend) }}
         >
-          <span style={{ fontSize: "24px" }}>{getMetricIcon(metricKey)}</span>
-          <span
-            style={{
-              fontSize: "14px",
-              color: colorMode === "light" ? "#718096" : "#a0aec0",
-              textTransform: "capitalize",
-            }}
-          >
-            {metricKey.replace(/([A-Z])/g, " $1").trim()}
+          <span className="trend-arrow">{getTrendArrow(metric.trend)}</span>
+          <span className="trend-value">
+            {Math.abs(metric.change).toFixed(1)}%
           </span>
         </div>
-
-        <div>
-          <div
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              marginBottom: "4px",
-            }}
-          >
-            {metric.value.toLocaleString()}
-          </div>
-          <div
-            style={{
-              color: colorMode === "light" ? "#718096" : "#a0aec0",
-              fontSize: "14px",
-              marginBottom: "8px",
-            }}
-          >
-            {metric.unit}
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span
-              style={{
-                padding: "4px 8px",
-                borderRadius: "4px",
-                fontSize: "12px",
-                fontWeight: "500",
-                backgroundColor: getTrendColor(metric.trend),
-                color: "white",
-              }}
-            >
-              {getTrendArrow(metric.trend)} {Math.abs(metric.change).toFixed(1)}
-            </span>
-            <span
-              style={{
-                fontSize: "12px",
-                color: colorMode === "light" ? "#a0aec0" : "#718096",
-              }}
-            >
-              from last month
-            </span>
-          </div>
-        </div>
+        <span className="trend-period">vs last month</span>
       </div>
     </div>
   );

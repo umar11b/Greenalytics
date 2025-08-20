@@ -58,6 +58,9 @@ body {
 .app {
   min-height: 100vh;
   transition: all 0.3s ease;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .app.light {
@@ -75,9 +78,13 @@ body {
   background: linear-gradient(135deg, var(--primary-color) 0%, #059669 100%);
   padding: var(--spacing-lg) 0;
   box-shadow: var(--dark-shadow);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
+  margin: 0;
+  width: 100%;
 }
 
 .header-content {
@@ -233,6 +240,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--spacing-xl) var(--spacing-lg);
+  padding-top: calc(var(--spacing-xl) + 80px); /* Account for fixed header */
 }
 
 /* Stats Overview */
